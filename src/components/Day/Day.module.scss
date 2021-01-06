@@ -1,0 +1,23 @@
+.container {
+  width: calc(100% - 18px);
+  min-height: 50px;
+  padding: 5px;
+  margin: 2px;
+  text-align: center;
+  border: 2px solid #e4e4e4;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #88bde9;
+    background-color: #afcfe99a;
+  }
+}
+
+.active {
+  border-color: #3f3f3f;
+}
+
+.selected {
+  border-color: #e77d7d;
+}
