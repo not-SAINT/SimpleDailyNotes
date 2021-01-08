@@ -1,0 +1,40 @@
+.container {
+  width: 100%;
+  min-height: 70px;
+  padding: 5px;
+  text-align: center;
+  border: 2px solid #e4e4e4;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #88bde9;
+    background-color: #afcfe99a;
+  }
+}
+
+.active {
+  border-color: #3f3f3f;
+}
+
+.selected {
+  border-color: #88bde9;
+  background-color: #afcfe99a;
+}
+
+.today {
+  border-color: #65c957;
+  background-color: #64c95741;
+}
+
+.badge {
+  display: block;
+  margin: 0 auto;
+  border: 1px solid #ffffff;
+  border-radius: 50%;
+  background-color: #ff0000;
+  color: #ffffff;
+  text-align: center;
+  width: 20px;
+  height: 20px;
+}

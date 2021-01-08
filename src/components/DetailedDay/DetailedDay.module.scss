@@ -1,0 +1,33 @@
+.container {
+  width: 53%;
+  min-height: 250px;
+  padding: 5px;
+  margin: 5px;
+
+  @media (max-width: 500px) {
+    width: 80%;
+    margin: 5px auto;
+  }
+}
+
+.list {
+  max-height: 400px;
+  overflow-y: scroll;
+
+  @media (max-width: 500px) {
+    max-height: 300px;
+  }
+}
+
+.selected {
+  background-color: #afcfe99a;
+  cursor: pointer;
+}
+
+.unselected {
+  cursor: pointer;
+}
+
+.header {
+  text-align: center;
+}

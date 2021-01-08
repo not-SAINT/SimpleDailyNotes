@@ -1,0 +1,17 @@
+.container {
+  max-width: 1200px;
+  margin: 10px auto;
+  font-family: 'Roboto', sans-serif;
+}
+
+.header {
+  text-align: center;
+}
+
+.details {
+  display: flex;
+  justify-content: space-between;
+  min-height: 300px;
+  margin: 10px auto;
+  flex-wrap: wrap;
+}
