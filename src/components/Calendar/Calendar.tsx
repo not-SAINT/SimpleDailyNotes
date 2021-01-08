@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../store/types';
 
-import getDaysForCalendar from '../../utils/utils';
+import { getDaysForCalendar } from '../../utils/utils';
 import Day from '../Day/Day';
 import style from './Calendar.module.scss';
 
