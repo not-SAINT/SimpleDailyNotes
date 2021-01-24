@@ -9,13 +9,13 @@ import style from './Calendar.module.scss';
 const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 const Calendar = (): React.ReactElement => {
-  const state = useSelector(({ selectedMonth, selectedPeriod }: AppState) => {
-    return { selectedMonth, selectedPeriod };
+  const state = useSelector(({ selectedMonthNumber, selectedMonth }: AppState) => {
+    return { selectedMonthNumber, selectedMonth };
   });
 
   const days = useMemo(() => {
-    return getDaysForCalendar(state.selectedPeriod);
-  }, [state.selectedPeriod]);
+    return getDaysForCalendar(state.selectedMonth);
+  }, [state.selectedMonth]);
 
   return (
     <>
@@ -26,7 +26,7 @@ const Calendar = (): React.ReactElement => {
       </div>
       <div className={style.container}>
         {days.map((day) => {
-          const isMonthActive = day.getMonth() === state.selectedPeriod.month();
+          const isMonthActive = day.getMonth() === state.selectedMonth.month();
 
           return <Day date={day} activeDay={isMonthActive} key={day.toLocaleString()} />;
         })}

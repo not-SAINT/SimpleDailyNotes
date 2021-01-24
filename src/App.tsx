@@ -5,11 +5,13 @@ import Calendar from './components/Calendar/Calendar';
 import Navigation from './components/Navigation/Navigation';
 import DetailedDay from './components/DetailedDay/DetailedDay';
 import InputField from './components/InputField/InputField';
+import NotesList from './components/NotesList/NotesList';
 import style from './App.module.scss';
 
 const App = (): React.ReactElement => {
-  const pickedDay = useSelector(({ selectedDay }: AppState) => selectedDay);
-  const pickedNote = useSelector(({ selectedNote }: AppState) => selectedNote);
+  const state = useSelector(({ selectedDay, selectedNote, selectedPeriod }: AppState) => {
+    return { selectedDay, selectedNote, selectedPeriod };
+  });
 
   return (
     <div className={style.container}>
@@ -19,12 +21,13 @@ const App = (): React.ReactElement => {
       </header>
       <main>
         <Calendar />
-        {pickedDay && (
+        {!state.selectedPeriod && state.selectedDay && (
           <div className={style.details}>
             <DetailedDay />
-            {pickedNote && <InputField />}
+            {state.selectedNote && <InputField />}
           </div>
         )}
+        {state.selectedPeriod && <NotesList period={state.selectedPeriod} />}
       </main>
     </div>
   );

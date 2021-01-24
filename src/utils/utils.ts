@@ -1,21 +1,27 @@
 import moment from 'moment';
 import { Note } from '../store/types';
 
+moment.updateLocale('en', {
+  week: {
+    dow: 1,
+  },
+});
+
 const WEEK_SIZE = 7;
 const CALENDAR_ROWS_COUNT = 6;
 const CALENDAR_FIELD = WEEK_SIZE * CALENDAR_ROWS_COUNT;
 const HOURS_IN_DAY = 24;
-const DAY_ID_FORMAT = 'YYYYMMDD';
+export const DAY_ID_FORMAT = 'YYYYMMDD';
 
-const getStartDate = (selectedPeriod: moment.Moment) => {
-  const dayOfWeek = selectedPeriod.weekday();
+const getStartDate = (selectedMonth: moment.Moment) => {
+  const dayOfWeek = selectedMonth.weekday() + 1;
   const shiftDays = dayOfWeek === 0 ? WEEK_SIZE - 1 : (dayOfWeek % WEEK_SIZE) - 1;
 
-  return selectedPeriod.subtract(shiftDays, 'day');
+  return selectedMonth.subtract(shiftDays, 'day');
 };
 
-const fillDays = (selectedPeriod: moment.Moment) => {
-  const startDate = getStartDate(selectedPeriod);
+const fillDays = (selectedMonth: moment.Moment) => {
+  const startDate = getStartDate(selectedMonth);
   const days = [];
 
   for (let i = 0; i < CALENDAR_FIELD; i += 1) {
@@ -25,8 +31,8 @@ const fillDays = (selectedPeriod: moment.Moment) => {
   return days;
 };
 
-export const getDaysForCalendar = (selectedPeriod: moment.Moment): Date[] => {
-  return fillDays(selectedPeriod.clone()).map((day) => day.toDate());
+export const getDaysForCalendar = (selectedMonth: moment.Moment): Date[] => {
+  return fillDays(selectedMonth.clone()).map((day) => day.toDate());
 };
 
 export const getNoteId = (selectedDay: Date | null, time: string): string => {
@@ -71,4 +77,8 @@ export const getCountNotesForDay = (notes: Note[], date: Date): number => {
   const dayId = moment(date).format(DAY_ID_FORMAT);
 
   return notes.filter(({ id }) => id.includes(dayId)).length;
+};
+
+export const getNotesForPeriod = (notes: Note[], period: moment.Moment[]): Note[] => {
+  return notes.filter(({ id }) => moment(id, DAY_ID_FORMAT).isBetween(period[0], period[1], 'day', '[]'));
 };

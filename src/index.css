@@ -1,1 +1,8 @@
 @import '~antd/dist/antd';
+
+@media (max-width: 650px) {
+  .ant-picker-panel-container .ant-picker-panels {
+    width: 300px;
+    flex-wrap: wrap;
+  }
+}

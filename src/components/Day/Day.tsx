@@ -18,8 +18,8 @@ type Props = {
 
 const Day = ({ date, activeDay }: Props): React.ReactElement => {
   const dispatch = useDispatch();
-  const state = useSelector(({ selectedDay, notes }: AppState) => {
-    return { selectedDay, notes };
+  const state = useSelector(({ selectedDay, selectedPeriod, notes }: AppState) => {
+    return { selectedDay, selectedPeriod, notes };
   });
 
   const countNotesForDay = useMemo(() => {
@@ -30,16 +30,22 @@ const Day = ({ date, activeDay }: Props): React.ReactElement => {
     return moment().format('DDMMYYYY') === moment(date).format('DDMMYYYY');
   }, [state.notes, state.selectedDay]);
 
+  const isSelected = !state.selectedPeriod
+    ? false
+    : moment(date).isBetween(state.selectedPeriod[0], state.selectedPeriod[1], 'day', '[]');
+
   const classes = classNames(
     style.container,
     { [style.active]: activeDay && date !== state.selectedDay },
-    { [style.selected]: date === state.selectedDay },
+    { [style.selected]: date === state.selectedDay || isSelected },
     { [style.today]: isToday && date !== state.selectedDay },
   );
 
   const onDayClick = () => {
-    dispatch(toogleDay(date));
-    dispatch(toogleNote(null));
+    if (!state.selectedPeriod) {
+      dispatch(toogleDay(date));
+      dispatch(toogleNote(null));
+    }
   };
 
   return (
