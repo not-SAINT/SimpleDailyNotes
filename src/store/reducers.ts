@@ -5,13 +5,15 @@ import {
   AppState,
   AppActionTypes,
   SELECT_MONTH,
-  DECREMENT_PERIOD,
-  INCREMENT_PERIOD,
+  DECREMENT_MONTH,
+  INCREMENT_MONTH,
   TOOGLE_DAY,
   TOOGLE_NOTE,
   ADD_NOTE,
   DELETE_NOTE,
   Note,
+  TOOGLE_PERIOD,
+  RESET_DAY,
 } from './types';
 
 const CURRENT_DATE = new Date();
@@ -28,14 +30,19 @@ const DEMO_NOTES = [
     id: '2021011110:00',
     message: 'Todo something',
   },
+  {
+    id: '2021012523:00',
+    message: 'Send task solution part 2 to form...',
+  },
 ] as Note[];
 
 const initialAppState: AppState = {
-  selectedMonth: CURRENT_DATE.getMonth(),
-  selectedPeriod: moment().year(CURRENT_DATE.getFullYear()).month(CURRENT_DATE.getMonth()).date(1),
+  selectedMonthNumber: CURRENT_DATE.getMonth(),
+  selectedMonth: moment().year(CURRENT_DATE.getFullYear()).month(CURRENT_DATE.getMonth()).date(1),
   selectedDay: null,
   selectedNote: null,
   notes: DEMO_NOTES,
+  selectedPeriod: null,
 };
 
 const appStateReducer = (state = initialAppState, action: AppActionTypes): AppState => {
@@ -43,22 +50,27 @@ const appStateReducer = (state = initialAppState, action: AppActionTypes): AppSt
     case SELECT_MONTH:
       return {
         ...state,
-        selectedMonth: action.payload,
+        selectedMonthNumber: action.payload,
       };
-    case DECREMENT_PERIOD:
+    case DECREMENT_MONTH:
       return {
         ...state,
-        selectedPeriod: state.selectedPeriod.clone().subtract(1, 'month'),
+        selectedMonth: state.selectedMonth.clone().subtract(1, 'month'),
       };
-    case INCREMENT_PERIOD:
+    case INCREMENT_MONTH:
       return {
         ...state,
-        selectedPeriod: state.selectedPeriod.clone().add(1, 'month'),
+        selectedMonth: state.selectedMonth.clone().add(1, 'month'),
       };
     case TOOGLE_DAY:
       return {
         ...state,
         selectedDay: state.selectedDay !== action.payload ? action.payload : null,
+      };
+    case RESET_DAY:
+      return {
+        ...state,
+        selectedDay: null,
       };
     case TOOGLE_NOTE:
       return {
@@ -74,6 +86,11 @@ const appStateReducer = (state = initialAppState, action: AppActionTypes): AppSt
       return {
         ...state,
         notes: state.notes.filter(({ id }) => id !== action.payload.id),
+      };
+    case TOOGLE_PERIOD:
+      return {
+        ...state,
+        selectedPeriod: action.payload ? [...action.payload] : null,
       };
     default:
       return state;

@@ -1,19 +1,23 @@
 import {
   AddNote,
   ADD_NOTE,
-  DecrementPeriod,
-  DECREMENT_PERIOD,
+  DecrementMonth,
+  DECREMENT_MONTH,
   DeleteNote,
   DELETE_NOTE,
-  IncrementPeriod,
-  INCREMENT_PERIOD,
+  IncrementMonth,
+  INCREMENT_MONTH,
   Note,
+  RESET_DAY,
+  ResetDay,
   SelectNewMonth,
   SELECT_MONTH,
   ToogleDay,
   ToogleNote,
+  TooglePeriod,
   TOOGLE_DAY,
   TOOGLE_NOTE,
+  TOOGLE_PERIOD,
 } from './types';
 
 export const selectNewMonth = (newMonth: number): SelectNewMonth => {
@@ -23,15 +27,15 @@ export const selectNewMonth = (newMonth: number): SelectNewMonth => {
   };
 };
 
-export const decrementPeriod = (): DecrementPeriod => {
+export const decrementMonth = (): DecrementMonth => {
   return {
-    type: DECREMENT_PERIOD,
+    type: DECREMENT_MONTH,
   };
 };
 
-export const incrementPeriod = (): IncrementPeriod => {
+export const incrementMonth = (): IncrementMonth => {
   return {
-    type: INCREMENT_PERIOD,
+    type: INCREMENT_MONTH,
   };
 };
 
@@ -39,6 +43,12 @@ export const toogleDay = (newDay: Date): ToogleDay => {
   return {
     type: TOOGLE_DAY,
     payload: newDay,
+  };
+};
+
+export const resetDay = (): ResetDay => {
+  return {
+    type: RESET_DAY,
   };
 };
 
@@ -60,5 +70,12 @@ export const deleteNote = (note: Note): DeleteNote => {
   return {
     type: DELETE_NOTE,
     payload: note,
+  };
+};
+
+export const tooglePeriod = (dates: moment.Moment[] | null): TooglePeriod => {
+  return {
+    type: TOOGLE_PERIOD,
+    payload: dates,
   };
 };
